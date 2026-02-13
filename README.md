@@ -9,7 +9,8 @@
 </p>
 
 <p align="center">
-  <a href="https://hatchmark.vercel.app">Live Demo</a> •
+  <a href="https://ethoxford.onrender.com/">Live Demo</a> •
+  <a href="https://youtu.be/Gok6uf3wdY0">Video Demo</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#architecture">Architecture</a> •
   <a href="#smart-contracts">Smart Contracts</a>
@@ -47,7 +48,9 @@ Hatchmark creates a new **consumer primitive for the Provenance Economy**:
 
 ## Live Demo
 
-**Frontend:** [hatchmark.vercel.app](https://hatchmark.vercel.app)
+**Frontend:** [ethoxford.onrender.com](https://ethoxford.onrender.com/)
+
+**Video Demo:** [Watch on YouTube](https://youtu.be/Gok6uf3wdY0)
 
 **Network:** Sui Testnet
 
@@ -76,8 +79,8 @@ Hatchmark creates a new **consumer primitive for the Provenance Economy**:
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/your-repo/hatchmark.git
-cd hatchmark/hatchmark-frontend
+git clone https://github.com/syedaliabbas1/hatchmarkethoxford.git
+cd hatchmarkethoxford/hatchmark-frontend
 npm install
 ```
 
