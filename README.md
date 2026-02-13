@@ -9,13 +9,13 @@
 </p>
 
 <p align="center">
-  <video src="https://github.com/syedaliabbas1/hatchmarkethoxford/assets/demo.mp4" width="100%" controls>
-    Your browser does not support the video tag.
-  </video>
+  <a href="https://youtu.be/Gok6uf3wdY0">
+    <img src="https://img.youtube.com/vi/Gok6uf3wdY0/maxresdefault.jpg" alt="Hatchmark Demo Video" width="600" />
+  </a>
 </p>
 
 <p align="center">
-  <em>📹 <a href="https://youtu.be/Gok6uf3wdY0">Watch full demo on YouTube</a></em>
+  <em>📹 Click the image above to watch the full demo on YouTube</em>
 </p>
 
 <p align="center">
