@@ -9,13 +9,13 @@
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/Gok6uf3wdY0">
-    <img src="https://img.youtube.com/vi/Gok6uf3wdY0/maxresdefault.jpg" alt="Hatchmark Demo Video" width="600" />
-  </a>
+  <video src="assets/demo.mp4" width="600" controls>
+    Your browser does not support the video tag.
+  </video>
 </p>
 
 <p align="center">
-  <em>📹 Click the image above to watch the full demo on YouTube</em>
+  <em>📹 <a href="https://youtu.be/Gok6uf3wdY0">Watch on YouTube</a> | <a href="assets/demo.mp4">Download Demo Video</a></em>
 </p>
 
 <p align="center">
