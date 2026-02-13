@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HatchMark — Pitch Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --fg: #f0efe9;
+    --muted: #7a786e;
+    --accent: #c8ff3c;
+    --accent-dim: rgba(200, 255, 60, 0.12);
+    --card: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.08);
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'DM Sans', -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Slide Container ── */
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6vh 8vw;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .slide.active .reveal {
+    animation: revealUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; }
+  .d1 { animation-delay: 0.1s !important; }
+  .d2 { animation-delay: 0.22s !important; }
+  .d3 { animation-delay: 0.34s !important; }
+  .d4 { animation-delay: 0.46s !important; }
+  .d5 { animation-delay: 0.58s !important; }
+  .d6 { animation-delay: 0.7s !important; }
+
+  /* ── Typography ── */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: clamp(0.65rem, 1vw, 0.8rem);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(3rem, 7vw, 7rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 4.2rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+
+  .subtitle {
+    font-size: clamp(1rem, 1.6vw, 1.35rem);
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 620px;
+    margin-top: 1.2rem;
+  }
+
+  .accent { color: var(--accent); }
+  .italic { font-style: italic; }
+
+  /* ── Grid Layouts ── */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.3s;
+  }
+
+  .card:hover { border-color: rgba(200, 255, 60, 0.25); }
+
+  .card-number {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+  }
+
+  .card h3 {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    margin-bottom: 0.6rem;
+    font-weight: 400;
+  }
+
+  .card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  /* ── Stats ── */
+  .stat-big {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 5vw, 5rem);
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    font-weight: 300;
+  }
+
+  /* ── Steps (How It Works) ── */
+  .steps {
+    display: flex;
+    gap: 0;
+    margin-top: 3rem;
+    align-items: stretch;
+  }
+
+  .step {
+    flex: 1;
+    padding: 2rem;
+    position: relative;
+    border-top: 1px solid var(--border);
+  }
+
+  .step::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .step-num {
+    font-family: var(--mono);
+    font-size: 2.5rem;
+    color: rgba(200, 255, 60, 0.15);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .step h3 {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+  }
+
+  .step p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  @media (max-width: 768px) {
+    .steps { flex-direction: column; }
+  }
+
+  /* ── Tech Pills ── */
+  .tech-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .pill {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--fg);
+    letter-spacing: 0.03em;
+    transition: all 0.3s;
+  }
+
+  .pill:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .pill.highlight {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  /* ── Timeline ── */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 2.5rem;
+  }
+
+  .tl-item {
+    padding: 1.5rem;
+    border-left: 1px solid var(--border);
+    position: relative;
+  }
+
+  .tl-item:first-child { border-left: none; }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -5px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .tl-item:first-child::before { left: 0; }
+
+  .tl-date {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.6rem;
+  }
+
+  .tl-item h3 {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+    font-weight: 400;
+  }
+
+  .tl-item p {
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  @media (max-width: 768px) {
+    .timeline { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── Use Cases ── */
+  .use-cases {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+    margin-top: 2rem;
+  }
+
+  .use-case {
+    text-align: center;
+    padding: 1.8rem 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: border-color 0.3s;
+  }
+
+  .use-case:hover { border-color: rgba(200, 255, 60, 0.25); }
+
+  .use-icon {
+    font-size: 2rem;
+    margin-bottom: 0.7rem;
+    display: block;
+  }
+
+  .use-case h4 {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+    font-weight: 400;
+  }
+
+  .use-case p {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 300;
+  }
+
+  @media (max-width: 768px) {
+    .use-cases { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── CTA / Final Slide ── */
+  .cta-url {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    color: var(--bg);
+    background: var(--accent);
+    padding: 0.8rem 2rem;
+    border-radius: 100px;
+    text-decoration: none;
+    margin-top: 2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .cta-url:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(200, 255, 60, 0.25);
+  }
+
+  .built-at {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Bottom Bar ── */
+  .bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .slide-counter {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 200;
+  }
+
+  .nav-hint {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    opacity: 0.5;
+  }
+
+  /* ── Decorative ── */
+  .bg-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200, 255, 60, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+    margin: 1.5rem 0;
+  }
+
+  /* ── Dispute flow ── */
+  .dispute-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 2rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  @media (max-width: 768px) {
+    .dispute-flow { flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+    .flow-arrow { display: none; }
+  }
+
+  .flow-step {
+    padding: 1rem 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .flow-step h4 {
+    font-family: var(--serif);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .flow-step p {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 300;
+  }
+
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+  }
+
+  /* ── Split Layout ── */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .split { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  /* ── Hash visual ── */
+  .hash-visual {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    line-height: 1.8;
+    word-break: break-all;
+    opacity: 0.7;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ─── SLIDE 1: Title ─── -->
+  <div class="slide active" data-slide="0">
+    <div class="bg-glow" style="top: -20%; right: -10%;"></div>
+    <div class="eyebrow reveal d1">ETH Oxford 2026</div>
+    <h1 class="reveal d2">Hatch<span class="accent">Mark</span></h1>
+    <div class="divider reveal d3"></div>
+    <p class="subtitle reveal d4" style="font-size: clamp(1.1rem, 1.8vw, 1.5rem); max-width: 580px;">
+      Prove you made it.<br>
+      <span style="color: var(--muted);">On-chain content authenticity for the AI age.</span>
+    </p>
+  </div>
+
+  <!-- ─── SLIDE 2: Problem ─── -->
+  <div class="slide" data-slide="1">
+    <div class="eyebrow reveal d1">The Problem</div>
+    <h2 class="reveal d2">In the age of AI, <br><span class="accent">proving creation</span> is broken.</h2>
+    <div class="grid-3 reveal d3">
+      <div class="card">
+        <div class="stat-big">2.1B</div>
+        <div class="stat-label">images generated by AI in 2025 alone</div>
+      </div>
+      <div class="card">
+        <div class="stat-big">85%</div>
+        <div class="stat-label">of creators have had work stolen online</div>
+      </div>
+      <div class="card">
+        <div class="stat-big">$0</div>
+        <div class="stat-label">trustless solutions available today</div>
+      </div>
+    </div>
+    <p class="subtitle reveal d4" style="margin-top: 2rem;">
+      Traditional copyright is slow, expensive, and centralized. Creators need a new primitive.
+    </p>
+  </div>
+
+  <!-- ─── SLIDE 3: Solution ─── -->
+  <div class="slide" data-slide="2">
+    <div class="eyebrow reveal d1">The Solution</div>
+    <div class="split">
+      <div>
+        <h2 class="reveal d2">Blockchain-powered <span class="accent italic">content fingerprints</span></h2>
+        <p class="subtitle reveal d3">
+          Register your work on Sui with a perceptual hash — a unique fingerprint that detects copies even when cropped, compressed, or filtered.
+        </p>
+        <p class="subtitle reveal d4" style="margin-top: 1rem;">
+          Immutable. Instant. Trustless.
+        </p>
+      </div>
+      <div class="reveal d4">
+        <div class="hash-visual">
+          Image → Resize 32×32 → Grayscale → DCT Transform<br>
+          → Extract 8×8 low-freq → Median threshold<br><br>
+          Hash: 0xf8a3c2b1e7d4560f<br>
+          ████░░██░░░░████░░██████░░░░░███<br>
+          64-bit perceptual fingerprint<br><br>
+          → Stored on Sui blockchain as owned object<br>
+          → Immutable timestamp via Sui Clock<br>
+          → Detects copies even after crop / resize / filter
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 4: How It Works ─── -->
+  <div class="slide" data-slide="3">
+    <div class="eyebrow reveal d1">How It Works</div>
+    <h2 class="reveal d2">Three steps to <span class="accent">provenance</span></h2>
+    <div class="steps reveal d3">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Upload</h3>
+        <p>Drag and drop your image. We compute a perceptual hash using DCT — resilient to edits, crops, and compression.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Register</h3>
+        <p>Sign a Sui transaction. Your content fingerprint is stored on-chain with an immutable timestamp. AI detection runs in parallel.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Protect</h3>
+        <p>Anyone can verify content against the registry. Stake-based disputes ensure accountability. Your proof lives forever.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 5: Key Innovation ─── -->
+  <div class="slide" data-slide="4">
+    <div class="eyebrow reveal d1">Key Innovation</div>
+    <h2 class="reveal d2">Not just hashing.<br><span class="accent">Perceptual</span> intelligence.</h2>
+    <div class="grid-3 reveal d3" style="margin-top: 2rem;">
+      <div class="card">
+        <div class="card-number">01 — PHASH</div>
+        <h3>DCT Perceptual Hashing</h3>
+        <p>Discrete Cosine Transform extracts visual frequency signatures. Detects copies even after cropping, filtering, or recompression.</p>
+      </div>
+      <div class="card">
+        <div class="card-number">02 — AI DETECT</div>
+        <h3>AI Content Detection</h3>
+        <p>Integrated Sightengine analysis flags AI-generated and deepfake content with confidence scoring on every upload.</p>
+      </div>
+      <div class="card">
+        <div class="card-number">03 — DISPUTES</div>
+        <h3>Stake-Based Resolution</h3>
+        <p>Flag stolen content with 0.1 SUI stake. Valid flags return stake; false claims forfeit it. Economic skin in the game.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 6: Dispute Flow ─── -->
+  <div class="slide" data-slide="5">
+    <div class="eyebrow reveal d1">Economic Design</div>
+    <h2 class="reveal d2">Disputes with <span class="accent">skin in the game</span></h2>
+    <div class="dispute-flow reveal d3">
+      <div class="flow-step">
+        <h4>🚩 Flag</h4>
+        <p>Detect stolen work</p>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <h4>💰 Stake</h4>
+        <p>Lock 0.1+ SUI</p>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <h4>⛓️ On-chain</h4>
+        <p>Shared dispute object</p>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <h4>⚖️ Resolve</h4>
+        <p>Creator decides</p>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <h4>✅ Distribute</h4>
+        <p>Stake returned or forfeited</p>
+      </div>
+    </div>
+    <p class="subtitle reveal d4" style="margin-top: 2rem;">
+      Spam prevention through economic incentives. Every flag has a cost — every resolution is transparent and on-chain.
+    </p>
+  </div>
+
+  <!-- ─── SLIDE 7: Tech Stack ─── -->
+  <div class="slide" data-slide="6">
+    <div class="eyebrow reveal d1">Tech Stack</div>
+    <h2 class="reveal d2">Built on <span class="accent">Sui</span></h2>
+    <div class="grid-2 reveal d3">
+      <div>
+        <p style="color: var(--muted); font-size: 0.8rem; margin-bottom: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;">Blockchain</p>
+        <div class="tech-row">
+          <span class="pill highlight">Sui Network</span>
+          <span class="pill highlight">Move Language</span>
+          <span class="pill">@mysten/dapp-kit</span>
+        </div>
+        <p style="color: var(--muted); font-size: 0.8rem; margin: 1.2rem 0 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;">Frontend</p>
+        <div class="tech-row">
+          <span class="pill">Next.js 15</span>
+          <span class="pill">React 19</span>
+          <span class="pill">TypeScript</span>
+          <span class="pill">Tailwind CSS</span>
+        </div>
+      </div>
+      <div>
+        <p style="color: var(--muted); font-size: 0.8rem; margin-bottom: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;">Backend</p>
+        <div class="tech-row">
+          <span class="pill">Supabase</span>
+          <span class="pill">PostgreSQL</span>
+          <span class="pill">Railway</span>
+        </div>
+        <p style="color: var(--muted); font-size: 0.8rem; margin: 1.2rem 0 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;">Intelligence</p>
+        <div class="tech-row">
+          <span class="pill highlight">DCT Perceptual Hash</span>
+          <span class="pill">Sightengine AI</span>
+          <span class="pill">Chrome Extension</span>
+        </div>
+      </div>
+    </div>
+    <p class="subtitle reveal d4" style="margin-top: 1.5rem;">
+      Object-centric model. Parallel execution. Low gas. Move language safety.
+    </p>
+  </div>
+
+  <!-- ─── SLIDE 8: Market ─── -->
+  <div class="slide" data-slide="7">
+    <div class="eyebrow reveal d1">Market Opportunity</div>
+    <h2 class="reveal d2">The <span class="accent italic">Provenance Economy</span></h2>
+    <div class="use-cases reveal d3">
+      <div class="use-case">
+        <span class="use-icon">📸</span>
+        <h4>Photographers</h4>
+        <p>Prove creation date, track usage</p>
+      </div>
+      <div class="use-case">
+        <span class="use-icon">📰</span>
+        <h4>News Orgs</h4>
+        <p>Combat deepfakes, verify sources</p>
+      </div>
+      <div class="use-case">
+        <span class="use-icon">⚖️</span>
+        <h4>Legal</h4>
+        <p>Timestamped evidence, dispute records</p>
+      </div>
+      <div class="use-case">
+        <span class="use-icon">🎨</span>
+        <h4>NFT Creators</h4>
+        <p>Pre-mint authenticity layer</p>
+      </div>
+    </div>
+    <p class="subtitle reveal d4" style="margin-top: 2rem;">
+      Infrastructure for a world where proving you made something matters more than ever.
+    </p>
+  </div>
+
+  <!-- ─── SLIDE 9: Roadmap ─── -->
+  <div class="slide" data-slide="8">
+    <div class="eyebrow reveal d1">Roadmap</div>
+    <h2 class="reveal d2">What's <span class="accent">next</span></h2>
+    <div class="timeline reveal d3">
+      <div class="tl-item">
+        <div class="tl-date">Q1 2026</div>
+        <h3>Refine MVP</h3>
+        <p>Batch uploads, better mobile UX, enhanced dashboard</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Q2 2026</div>
+        <h3>ZK Proofs</h3>
+        <p>Privacy-preserving ownership verification without revealing originals</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Q3 2026</div>
+        <h3>Ecosystem</h3>
+        <p>Creator marketplace, third-party API, WordPress plugin</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Q4 2026</div>
+        <h3>Mainnet</h3>
+        <p>Sui mainnet launch, security audit, governance token</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 10: CTA ─── -->
+  <div class="slide" data-slide="9">
+    <div class="bg-glow" style="bottom: -20%; left: -10%;"></div>
+    <div class="eyebrow reveal d1">Try It Now</div>
+    <h1 class="reveal d2" style="font-size: clamp(2.5rem, 5.5vw, 5.5rem);">
+      Prove you<br><span class="accent">made it.</span>
+    </h1>
+    <div class="divider reveal d3"></div>
+    <a class="cta-url reveal d4" href="https://ethoxford.onrender.com/verify" target="_blank">ethoxford.onrender.com/verify</a>
+    <div class="built-at reveal d5">Built in 36 hours · ETH Oxford 2026 · Sui Network</div>
+  </div>
+
+</div>
+
+<!-- ── Bottom Bar ── -->
+<div class="bottom-bar">
+  <div class="slide-counter" id="counter">01 / 10</div>
+  <div class="nav-hint">← → or click to navigate</div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  let current = 0;
+  const total = slides.length;
+
+  function goTo(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    // Reset reveal animations
+    slides[current].querySelectorAll('.reveal').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight; // trigger reflow
+      el.style.animation = '';
+      el.style.opacity = '0';
+    });
+    current = n;
+    slides[current].classList.add('active');
+    counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      goTo(current + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      goTo(current - 1);
+    }
+  });
+
+  // Click navigation (left 30% = back, right 70% = forward)
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    const x = e.clientX / window.innerWidth;
+    if (x < 0.3) goTo(current - 1);
+    else goTo(current + 1);
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goTo(current + 1);
+      else goTo(current - 1);
+    }
+  });
+
+  // Init
+  goTo(0);
+</script>
+
+</body>
+</html>
