@@ -1,11 +1,21 @@
 <p align="center">
-  <img src="hatchmark-frontend/public/logo.svg" alt="Hatchmark Logo" width="80" height="80" />
+  <img src="assets/logo.svg" alt="Hatchmark Logo" width="80" height="80" />
 </p>
 
 <h1 align="center">Hatchmark</h1>
 
 <p align="center">
   <strong>Blockchain-powered content authenticity for the provenance economy</strong>
+</p>
+
+<p align="center">
+  <video src="https://github.com/syedaliabbas1/hatchmarkethoxford/assets/demo.mp4" width="100%" controls>
+    Your browser does not support the video tag.
+  </video>
+</p>
+
+<p align="center">
+  <em>📹 <a href="https://youtu.be/Gok6uf3wdY0">Watch full demo on YouTube</a></em>
 </p>
 
 <p align="center">
